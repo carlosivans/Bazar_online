@@ -1,5 +1,5 @@
 <?php
-<?php
+
 // Configuración base de la aplicación
 
 // Definir BASE_URL
