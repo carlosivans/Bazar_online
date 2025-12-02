@@ -1,13 +1,15 @@
 <?php
+require_once __DIR__ . '/../config/config.php';
 include 'navbar.php';
+
 if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
+    header('Location: ' . BASE_URL . 'app/views/login.php');
     exit();
 }
-$user = $_SESSION['usuario'];
 
+$user = $_SESSION['usuario'];
 $isEdit = isset($producto);
-$formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar' : '../controllers/ProductoController.php?action=crear';
+$formAction = $isEdit ? BASE_URL . 'app/controllers/ProductoController.php?action=actualizar' : BASE_URL . 'app/controllers/ProductoController.php?action=crear';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,7 +17,7 @@ $formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><?php echo $isEdit ? 'Editar Producto' : 'Crear Producto'; ?> - Bazar Online</title>
-    <link rel="stylesheet" href="../../public/css/producto_form.css" />
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>public/css/producto_form.css" />
 </head>
 <body>
     <div class="product-form-container">
@@ -24,6 +26,7 @@ $formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar
             <?php if ($isEdit): ?>
                 <input type="hidden" name="id_producto" value="<?php echo intval($producto['id_producto']); ?>" />
             <?php endif; ?>
+            
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required value="<?php echo $isEdit ? htmlspecialchars($producto['nombre']) : ''; ?>" />
 
@@ -50,12 +53,12 @@ $formAction = $isEdit ? '../controllers/ProductoController.php?action=actualizar
 
             <label for="imagen">Imagen:</label>
             <?php if ($isEdit && !empty($producto['imagen'])): ?>
-                <img src="../../public/uploads/<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen actual" width="120" />
+                <img src="<?php echo BASE_URL; ?>public/uploads/<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen actual" width="120" />
             <?php endif; ?>
             <input type="file" id="imagen" name="imagen" accept="image/*" />
 
             <button type="submit"><?php echo $isEdit ? 'Actualizar' : 'Crear'; ?></button>
-            <a href="../controllers/ProductoController.php?action=listar" class="btn-secondary">Cancelar</a>
+            <a href="<?php echo BASE_URL; ?>app/controllers/ProductoController.php?action=listar" class="btn-secondary">Cancelar</a>
         </form>
     </div>
 </body>

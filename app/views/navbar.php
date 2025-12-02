@@ -1,7 +1,12 @@
+
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Incluir configuración
+require_once __DIR__ . '/../config/config.php';
+
 // Funciones de sesión
 function isLoggedIn()
 {
@@ -14,7 +19,7 @@ function getUserName()
 }
 ?>
 
-<link rel="stylesheet" href="/Bazar_online/public/css/navbar.css" />
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>public/css/navbar.css" />
 <header class="header">
     <nav class="nav" id="nav-menu">
         <div class="logo">Bazar Online</div>
@@ -22,25 +27,26 @@ function getUserName()
             &#9776;
         </button>
         <div class="nav-links">
-            <a href="\Bazar_online\index.php">Inicio</a>
-            <a href="\Bazar_online\app\views\catalogo.php">Catálogo</a>
+            <a href="<?php echo BASE_URL; ?>index.php">Inicio</a>
+            <a href="<?php echo BASE_URL; ?>app/views/catalogo.php">Catálogo</a>
             <?php if (!isLoggedIn()): ?>
-                <a href="\Bazar_online\app\views\login.php">Iniciar Sesión</a>
-                <a href="\Bazar_online\app\views\registro.php">Registrarse</a>
+                <a href="<?php echo BASE_URL; ?>app/views/login.php">Iniciar Sesión</a>
+                <a href="<?php echo BASE_URL; ?>app/views/registro.php">Registrarse</a>
             <?php else: ?>
-                <a href="\Bazar_online\app\views\perfil.php">Perfil</a>
-                <a href="\Bazar_online\logout.php">Cerrar Sesión</a>
+                <a href="<?php echo BASE_URL; ?>app/views/perfil.php">Perfil</a>
+                <a href="<?php echo BASE_URL; ?>logout.php">Cerrar Sesión</a>
             <?php endif; ?>
         </div>
     </nav>
 </header>
 
-
 <script>
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
 
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('nav-menu_visible');
-    });
+    if (navToggle) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('nav-menu_visible');
+        });
+    }
 </script>
